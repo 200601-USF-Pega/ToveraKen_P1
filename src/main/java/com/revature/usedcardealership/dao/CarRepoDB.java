@@ -115,7 +115,7 @@ public class CarRepoDB implements ICarRepo{
 		String cFirstName = inputValidation.getValidString("--Enter customer first name--");
 		String cLastName = inputValidation.getValidString("--Enter customer last name--");
 		int paidPrice = inputValidation.getValidInt("--Enter amount paid--");
-		
+
 		try {
 			
 			

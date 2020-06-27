@@ -210,6 +210,17 @@
                 document.getElementById('delete').value = "";
             })
         });
+
+        $(function(){
+            $("#addButton").click(function(){
+              //  alert('Vehicle DELETED!');
+                document.getElementById('id').value = "";
+                document.getElementById('year').value = "";
+                document.getElementById('make').value = "";
+                document.getElementById('model').value = "";
+                document.getElementById('price').value = "";
+            })
+        });
     </script>
 
 </head>
@@ -221,8 +232,6 @@
                 <img src="logo.png" />
             </div>
             <ul>
-                <li class="active">><a href="#">Home</a></li>
-                <!-- Button trigger modal -->
                 <li>
                     <button type="button" class="btn btn-warning" data-toggle="modal" data-target="#exampleModalLong">
                     View Transactions
@@ -252,6 +261,7 @@
             <form action="getcars" method="get">
 
                 <input class="btn btn-warning" type="button" onClick="getAllCars()" value="View Inventory" />
+                <input class="btn btn-warning" type="button" value="Purchase Vehicle" />
                 <!-- <input type="submit" class="btn btn-primary" value="View inventory"> -->
                 <!--      <a href="#" class="btn">View Inventory</a> -->
             </form>
@@ -310,6 +320,7 @@
                         <input type="text" name="make" id="make" placeholder="Enter Vehicle Make"><br>
                         <input type="text" name="model" id="model" placeholder="Enter Vehicle Model"><br>
                         <input type="text" name="price" id="price" placeholder="Enter Vehicle Price $"><br>
+                        <input type="button" class="btn btn-success" value="Reset" id="addButton" />
                         <button type="submit" class="btn btn-success">ADD new Vehicle</button>
                     </div>
                 </form>
@@ -334,6 +345,7 @@
             </div>
           </div>
 
+          
     </header>
 
     <div class="table-responsive">

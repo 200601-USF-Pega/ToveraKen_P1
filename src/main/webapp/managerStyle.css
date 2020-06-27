@@ -84,6 +84,10 @@ ul li.active a{
     color: #000;
 }
 
+.form-group{
+    text-align: center;
+}
+
 /* input {
     text-decoration: none;
     color: #fff;
