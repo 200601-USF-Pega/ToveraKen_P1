@@ -36,16 +36,32 @@ CarRepoDB carRepoDB = new CarRepoDB();
     @Path("/newVehicle")
     @Consumes(MediaType.MULTIPART_FORM_DATA)
     public Response addNewVehicle(@FormDataParam("id") int id, @FormDataParam("year") int year, @FormDataParam("make") String make, @FormDataParam("model") String model, @FormDataParam("price") int price) throws URISyntaxException {
-//      System.out.println(id+year + make + model+price);
-        CarRepoDB carRepoDB = new CarRepoDB();
+
+//        CarRepoDB carRepoDB = new CarRepoDB();
         Vehicle vehicle = new Vehicle();
         vehicle.setId(id);
         vehicle.setYear(year);
         vehicle.setMake(make);
         vehicle.setModel(model);
         vehicle.setForSale(price);
-//        System.out.println(vehicle);
+
         carRepoDB.addVehicle(vehicle);
+
+        return Response.status(401).build();
+
+    }
+
+    @POST
+    @Path("/delete")
+    @Consumes(MediaType.MULTIPART_FORM_DATA)
+    public Response deleteVehicle(@FormDataParam("delete") int id) throws URISyntaxException {
+
+        try {
+            carRepoDB.deleteCar(id);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
 
         return Response.status(401).build();
 

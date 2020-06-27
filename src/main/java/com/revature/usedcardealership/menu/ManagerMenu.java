@@ -53,7 +53,7 @@ public class ManagerMenu implements IMenu{
 				currentMenu.menuStart();
 				break;
 			case 2:
-				carRepoDB.deleteCar();
+		//		carRepoDB.deleteCar();
 				currentMenu = menuFactory.changeMenu("Manager");
 				currentMenu.menuStart();
 				break;

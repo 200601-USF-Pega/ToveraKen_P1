@@ -147,6 +147,69 @@
 
         }
 
+        window.addEventListener("load", function () {
+            function sendData() {
+                const XHR = new XMLHttpRequest();
+
+                // Bind the FormData object and the form element
+                const FD = new FormData(form);
+
+                // Define what happens on successful data submission
+                XHR.addEventListener("load", function (event) {
+                    window.location.href("http://www.w3schools.com");
+                    //alert( event.target.responseText );
+                });
+
+                // Define what happens in case of error
+                XHR.addEventListener("error", function (event) {
+                    alert('Oops! Something went wrong.');
+                });
+
+                // Set up our request
+                XHR.open("POST", "http://localhost:10080/P1.5/service/car/delete");
+
+                // The data sent is what the user provided in the form
+                //XHR.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+                XHR.send(FD);
+            }
+
+            // Access the form element...
+            const form = document.getElementById("deleteform");
+
+            // ...and take over its submit event.
+            form.addEventListener("submit", function (event) {
+                event.preventDefault();
+
+                sendData();
+            });
+        });
+
+        function deleteVehicle() {
+
+            var data = new FormData();
+            let car = [];
+            car.vin = document.getElementById("delete").value;
+            data.append('vin#', car.vin);
+
+            var xhr = new XMLHttpRequest();
+            xhr.open('POST', 'http://localhost:10080/P1.5/service/car/delete', true);
+            xhr.onload = function () {
+                var status = xhttp.status
+
+                if (status > 199 && status < 300 && this.readyState > 3) {
+
+                    window.location.href("http://www.w3schools.com");
+
+                }
+            };
+        }
+
+        $(function(){
+            $("#deleteButton").click(function(){
+              //  alert('Vehicle DELETED!');
+                document.getElementById('delete').value = "";
+            })
+        });
     </script>
 
 </head>
@@ -170,7 +233,9 @@
                     ADD Vehicle
                     </button>
                 </li>
-                <li><a href="#">Delete Vehicle</a></li>
+                    <button type="button" class="btn btn-warning" data-toggle="modal" data-target=".bd-example-modal-sm">
+                    DELETE Vehicle
+                    </button>
                 <li>
                     <form action="logIn.html">
                         <input class="btn btn-warning" type="submit" value="Back to log-in" />
@@ -227,7 +292,7 @@
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                        <input class="btn btn-warning" type="button" onClick="viewTransactions()" value="View Inventory" />
+                        <input class="btn btn-warning" type="button" onClick="viewTransactions()" value="View Transactions"/>
                         <!-- <button type="button" class="btn btn-primary">Save changes</button> -->
                     </div>
                 </div>
@@ -246,6 +311,22 @@
                         <input type="text" name="model" id="model" placeholder="Enter Vehicle Model"><br>
                         <input type="text" name="price" id="price" placeholder="Enter Vehicle Price $"><br>
                         <button type="submit" class="btn btn-success">ADD new Vehicle</button>
+                    </div>
+                </form>
+
+              </div>
+            </div>
+          </div>
+
+          <div class="modal fade bd-example-modal-sm" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-sm">
+              <div class="modal-content">
+                
+                <form id="deleteform">
+                    <div class="form-group">
+                        <input type="text" name="delete" id="delete" placeholder="Enter VIN#"><br>
+                        <input type="button" class="btn btn-success" value="Reset" id="deleteButton" />
+                        <button type="submit" class="btn btn-success">DELETE</button>
                     </div>
                 </form>
 

@@ -136,14 +136,14 @@ public class CarRepoDB implements ICarRepo{
 	}
 
 	
-	public void deleteCar() throws FileNotFoundException, IOException {
+	public void deleteCar(int vehicleId) throws FileNotFoundException, IOException {
 
 		 setup();
 		    LOGGER.info("deleted vehicle");
 		
-		ValidationService inputValidation = new ValidationService();
-		int vehicleId = inputValidation.getValidInt("\n--Input vehicle id# to delete vehicle-- \n");
-		
+//		ValidationService inputValidation = new ValidationService();
+//		int vehicleId = inputValidation.getValidInt("\n--Input vehicle id# to delete vehicle-- \n");
+
 		MenuFactory menuFactory = new MenuFactory();
 		IMenu currentMenu;
 

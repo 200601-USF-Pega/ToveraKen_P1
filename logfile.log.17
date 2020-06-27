@@ -1,0 +1,4 @@
+Jun 27, 2020 1:53:17 PM com.revature.usedcardealership.dao.CarRepoDB deleteCar
+INFO: deleted vehicle
+Jun 27, 2020 1:53:17 PM com.revature.usedcardealership.dao.CarRepoDB getAllCars
+INFO: viewed inventory
