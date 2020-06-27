@@ -204,16 +204,16 @@
             };
         }
 
-        $(function(){
-            $("#deleteButton").click(function(){
-              //  alert('Vehicle DELETED!');
+        $(function () {
+            $("#deleteButton").click(function () {
+                //  alert('Vehicle DELETED!');
                 document.getElementById('delete').value = "";
             })
         });
 
-        $(function(){
-            $("#addButton").click(function(){
-              //  alert('Vehicle DELETED!');
+        $(function () {
+            $("#addButton").click(function () {
+                //  alert('Vehicle DELETED!');
                 document.getElementById('id').value = "";
                 document.getElementById('year').value = "";
                 document.getElementById('make').value = "";
@@ -221,6 +221,73 @@
                 document.getElementById('price').value = "";
             })
         });
+
+        window.addEventListener("load", function () {
+            function sendData() {
+                const XHR = new XMLHttpRequest();
+
+                // Bind the FormData object and the form element
+                const FD = new FormData(form);
+
+                // Define what happens on successful data submission
+                XHR.addEventListener("load", function (event) {
+                    window.location.href("http://www.w3schools.com");
+                    //alert( event.target.responseText );
+                });
+
+                // Define what happens in case of error
+                XHR.addEventListener("error", function (event) {
+                    alert('Oops! Something went wrong.');
+                });
+
+                // Set up our request
+                XHR.open("POST", "http://localhost:10080/P1.5/service/car/buyVehicle");
+
+                // The data sent is what the user provided in the form
+                //XHR.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+                XHR.send(FD);
+            }
+
+            // Access the form element...
+            const form = document.getElementById("purchaseform");
+
+            // ...and take over its submit event.
+            form.addEventListener("submit", function (event) {
+                event.preventDefault();
+
+                sendData();
+            });
+        });
+
+        function purchase() {
+
+            var data = new FormData();
+            let purchase = [];
+            purchase.salesid = document.getElementById("salesid").value;
+            purchase.vin = document.getElementById("vin").value;
+            purchase.firstname = document.getElementById("firstname").value;
+            purchase.lastname = document.getElementById("lastname").value;
+            purchase.price = document.getElementById("price").value;
+            data.append('salesId', purchase.salesid);
+            data.append('vin#', purchase.vin);
+            data.append('firstName', purchase.firstname);
+            data.append('lastName', purchase.lastname);
+            data.append('price', purchase.price);
+            
+
+            var xhr = new XMLHttpRequest();
+            xhr.open('POST', 'http://localhost:10080/P1.5/service/car/buyVehicle', true);
+            xhr.onload = function () {
+                var status = xhttp.status
+
+                if (status > 199 && status < 300 && this.readyState > 3) {
+
+                    window.location.href("http://www.w3schools.com");
+
+                }
+            };
+            xhr.send(data);
+        }
     </script>
 
 </head>
@@ -234,21 +301,22 @@
             <ul>
                 <li>
                     <button type="button" class="btn btn-warning" data-toggle="modal" data-target="#exampleModalLong">
-                    View Transactions
+                        View Transactions
                     </button>
                 </li>
                 <li>
-                    <button type="button" class="btn btn-warning" data-toggle="modal" data-target=".bd-example-modal-lg">
-                    ADD Vehicle
+                    <button type="button" class="btn btn-warning" data-toggle="modal"
+                        data-target=".bd-example-modal-lg">
+                        ADD Vehicle
                     </button>
                 </li>
-                    <button type="button" class="btn btn-warning" data-toggle="modal" data-target=".bd-example-modal-sm">
+                <button type="button" class="btn btn-warning" data-toggle="modal" data-target=".bd-example-modal-sm">
                     DELETE Vehicle
-                    </button>
+                </button>
                 <li>
                     <form action="logIn.html">
                         <input class="btn btn-warning" type="submit" value="Back to log-in" />
-                    </form>                    
+                    </form>
                 </li>
             </ul>
         </div>
@@ -261,7 +329,10 @@
             <form action="getcars" method="get">
 
                 <input class="btn btn-warning" type="button" onClick="getAllCars()" value="View Inventory" />
-                <input class="btn btn-warning" type="button" value="Purchase Vehicle" />
+                <!-- Button trigger modal -->
+                <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModalCenter">
+                    Purchase Vehicle
+                </button>
                 <!-- <input type="submit" class="btn btn-primary" value="View inventory"> -->
                 <!--      <a href="#" class="btn">View Inventory</a> -->
             </form>
@@ -294,7 +365,7 @@
                                     </tr>
                                 </thead>
                                 <tbody>
-                    
+
                                 </tbody>
                             </table>
                         </div>
@@ -302,50 +373,84 @@
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                        <input class="btn btn-warning" type="button" onClick="viewTransactions()" value="View Transactions"/>
+                        <input class="btn btn-warning" type="button" onClick="viewTransactions()"
+                            value="View Transactions" />
                         <!-- <button type="button" class="btn btn-primary">Save changes</button> -->
                     </div>
                 </div>
             </div>
         </div>
 
-        <div class="modal fade bd-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+        <div class="modal fade bd-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel"
+            aria-hidden="true">
             <div class="modal-dialog modal-lg">
-              <div class="modal-content">
+                <div class="modal-content">
 
-                <form id="addform">
-                    <div class="form-group">
-                        <input type="text" name="id" id="id" placeholder="Enter VIN#"><br>
-                        <input type="text" name="year" id="year" placeholder="Enter Vehicle Year"><br>
-                        <input type="text" name="make" id="make" placeholder="Enter Vehicle Make"><br>
-                        <input type="text" name="model" id="model" placeholder="Enter Vehicle Model"><br>
-                        <input type="text" name="price" id="price" placeholder="Enter Vehicle Price $"><br>
-                        <input type="button" class="btn btn-success" value="Reset" id="addButton" />
-                        <button type="submit" class="btn btn-success">ADD new Vehicle</button>
-                    </div>
-                </form>
+                    <form id="addform">
+                        <div class="form-group">
+                            <input type="text" name="id" id="id" placeholder="Enter VIN#"><br>
+                            <input type="text" name="year" id="year" placeholder="Enter Vehicle Year"><br>
+                            <input type="text" name="make" id="make" placeholder="Enter Vehicle Make"><br>
+                            <input type="text" name="model" id="model" placeholder="Enter Vehicle Model"><br>
+                            <input type="text" name="price" id="price" placeholder="Enter Vehicle Price $"><br>
+                            <input type="button" class="btn btn-success" value="Reset" id="addButton" />
+                            <button type="submit" class="btn btn-success">ADD new Vehicle</button>
+                        </div>
+                    </form>
 
-              </div>
+                </div>
             </div>
-          </div>
+        </div>
 
-          <div class="modal fade bd-example-modal-sm" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">
+        <div class="modal fade bd-example-modal-sm" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel"
+            aria-hidden="true">
             <div class="modal-dialog modal-sm">
-              <div class="modal-content">
-                
-                <form id="deleteform">
-                    <div class="form-group">
-                        <input type="text" name="delete" id="delete" placeholder="Enter VIN#"><br>
-                        <input type="button" class="btn btn-success" value="Reset" id="deleteButton" />
-                        <button type="submit" class="btn btn-success">DELETE</button>
-                    </div>
-                </form>
+                <div class="modal-content">
 
-              </div>
+                    <form id="deleteform">
+                        <div class="form-group">
+                            <input type="text" name="delete" id="delete" placeholder="Enter VIN#"><br>
+                            <input type="button" class="btn btn-success" value="Reset" id="deleteButton" />
+                            <button type="submit" class="btn btn-success">DELETE</button>
+                        </div>
+                    </form>
+
+                </div>
             </div>
-          </div>
+        </div>
 
-          
+        <!-- Modal -->
+        <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog"
+            aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLongTitle">Modal title</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+
+                        <form id="purchaseform">
+                            <div class="form-group">
+                                <input type="text" name="salesid" id="salesid" placeholder="Enter Associate #"><br>
+                                <input type="text" name="vin" id="vin" placeholder="Enter VIN #:"><br>
+                                <input type="text" name="firstname" id="firstname" placeholder="Enter Customer First Name"><br>
+                                <input type="text" name="lastname" id="lastname" placeholder="Enter Customer Last Name"><br>
+                                <input type="text" name="price" id="price" placeholder="Enter Purchase Price $"><br>
+                                <button type="submit" class="btn btn-success">BUY Vehicle</button>
+                            </div>
+                        </form>
+
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                        <button type="button" class="btn btn-primary">Save changes</button>
+                    </div>
+                </div>
+            </div>
+        </div>
     </header>
 
     <div class="table-responsive">
