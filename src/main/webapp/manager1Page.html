@@ -1,0 +1,276 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title>#1 USED DEALER</title>
+    <link href="https://fonts.googleapis.com/css2?family=Notable&display=swap" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="managerStyle.css" />
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"
+        integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj"
+        crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"
+        integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo"
+        crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css"
+        integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"
+        integrity="sha384-OgVRvuATP1z7JjHLkuOU7Xw704+h835Lr+6QL9UvYjZE3Ipu6Tp75j7Bh/kR0JKI"
+        crossorigin="anonymous"></script>
+
+    <script>
+        var car = [];
+        function getAllCars() {
+            var xhttp = new XMLHttpRequest();
+            xhttp.onreadystatechange = function () {
+                if (this.readyState == 4 && this.status > 199) {
+                    document.querySelectorAll("#carTable tbody tr")
+                        .forEach(function (item) { item.remove() });
+
+                    car = JSON.parse(this.responseText);
+                    console.log(car, "Im here")
+                    let table = document.querySelector("#carTable");
+
+                    for (let i = 0; i < car.length; ++i) {
+                        let row = table.insertRow(table.rows.length);
+
+                        let yearCell = row.insertCell(0);
+                        yearCell.innerHTML = car[i].year;
+
+                        let makeCell = row.insertCell(1);
+                        makeCell.innerHTML = car[i].make;
+
+                        let modelCell = row.insertCell(2);
+                        modelCell.innerHTML = car[i].model;
+                    }
+                }
+            };
+
+            xhttp.open("GET", "http://localhost:10080/P1.5/service/car/all", true);
+            xhttp.send();
+        }
+
+        var transaction = [];
+        function viewTransactions() {
+            var xhttp = new XMLHttpRequest();
+            xhttp.onreadystatechange = function () {
+                if (this.readyState == 4 && this.status > 199) {
+                    document.querySelectorAll("#transactionTable tbody tr")
+                        .forEach(function (item) { item.remove() });
+
+                    transaction = JSON.parse(this.responseText);
+                    console.log(transaction, "Im here")
+                    let table = document.querySelector("#transactionTable");
+
+                    for (let i = 0; i < transaction.length; ++i) {
+                        let row = table.insertRow(table.rows.length);
+
+                        let transactionCell = row.insertCell(0);
+                        transactionCell.innerHTML = transaction[i];
+
+                        // let makeCell = row.insertCell(1);
+                        // makeCell.innerHTML = transaction[i].make;
+
+                        // let modelCell = row.insertCell(2);
+                        // modelCell.innerHTML = transaction[i].model;
+                    }
+                }
+            };
+
+            xhttp.open("GET", "http://localhost:10080/P1.5/service/car/transactions", true);
+            xhttp.send();
+        }
+
+        window.addEventListener("load", function () {
+            function sendData() {
+                const XHR = new XMLHttpRequest();
+
+                // Bind the FormData object and the form element
+                const FD = new FormData(form);
+
+                // Define what happens on successful data submission
+                XHR.addEventListener("load", function (event) {
+                    window.location.href("http://www.w3schools.com");
+                    //alert( event.target.responseText );
+                });
+
+                // Define what happens in case of error
+                XHR.addEventListener("error", function (event) {
+                    alert('Oops! Something went wrong.');
+                });
+
+                // Set up our request
+                XHR.open("POST", "http://localhost:10080/P1.5/service/car/newVehicle");
+
+                // The data sent is what the user provided in the form
+                //XHR.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+                XHR.send(FD);
+            }
+
+            // Access the form element...
+            const form = document.getElementById("addform");
+
+            // ...and take over its submit event.
+            form.addEventListener("submit", function (event) {
+                event.preventDefault();
+
+                sendData();
+            });
+        });
+
+        function submitVehicle() {
+
+            var data = new FormData();
+            let car = [];
+            car.id = document.getElementById("id").value;
+            car.year = document.getElementById("year").value;
+            car.make = document.getElementById("make").value;
+            car.model = document.getElementById("model").value;
+            car.price = document.getElementById("price").value;
+            data.append('id', car.id);
+            data.append('year', car.year);
+            data.append('make', car.make);
+            data.append('model', car.model);
+            data.append('price', car.price);
+
+            var xhr = new XMLHttpRequest();
+            xhr.open('POST', 'http://localhost:10080/P1.5/service/car/newVehicle', true);
+            xhr.onload = function () {
+                var status = xhttp.status
+
+                if (status > 199 && status < 300 && this.readyState > 3) {
+
+                    window.location.href("http://www.w3schools.com");
+
+                }
+            };
+            xhr.send(data);
+
+        }
+
+    </script>
+
+</head>
+
+<body>
+    <header>
+        <div class="main">
+            <div class="logo">
+                <img src="logo.png" />
+            </div>
+            <ul>
+                <li class="active">><a href="#">Home</a></li>
+                <!-- Button trigger modal -->
+                <li>
+                    <button type="button" class="btn btn-warning" data-toggle="modal" data-target="#exampleModalLong">
+                    View Transactions
+                    </button>
+                </li>
+                <li>
+                    <button type="button" class="btn btn-warning" data-toggle="modal" data-target=".bd-example-modal-lg">
+                    ADD Vehicle
+                    </button>
+                </li>
+                <li><a href="#">Delete Vehicle</a></li>
+                <li>
+                    <form action="logIn.html">
+                        <input class="btn btn-warning" type="submit" value="Back to log-in" />
+                    </form>                    
+                </li>
+            </ul>
+        </div>
+        <div class="title">
+            <h1>#1 USED DEALER</h1>
+        </div>
+
+        <div class="button">
+
+            <form action="getcars" method="get">
+
+                <input class="btn btn-warning" type="button" onClick="getAllCars()" value="View Inventory" />
+                <!-- <input type="submit" class="btn btn-primary" value="View inventory"> -->
+                <!--      <a href="#" class="btn">View Inventory</a> -->
+            </form>
+
+        </div>
+
+
+
+        <!-- Modal -->
+        <div class="modal fade" id="exampleModalLong" tabindex="-1" role="dialog"
+            aria-labelledby="exampleModalLongTitle" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLongTitle">Transactions</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+
+                        <div class="table-responsive">
+
+                            <table class="table table-dark" id="transactionTable">
+                                <thead>
+                                    <tr>
+                                        <td scope="col">Transactions</td>
+                                        <!-- <td scope="col">Make</td>
+                                        <td scope="col">Model</td> -->
+                                    </tr>
+                                </thead>
+                                <tbody>
+                    
+                                </tbody>
+                            </table>
+                        </div>
+
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                        <input class="btn btn-warning" type="button" onClick="viewTransactions()" value="View Inventory" />
+                        <!-- <button type="button" class="btn btn-primary">Save changes</button> -->
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="modal fade bd-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-lg">
+              <div class="modal-content">
+
+                <form id="addform">
+                    <div class="form-group">
+                        <input type="text" name="id" id="id" placeholder="Enter VIN#"><br>
+                        <input type="text" name="year" id="year" placeholder="Enter Vehicle Year"><br>
+                        <input type="text" name="make" id="make" placeholder="Enter Vehicle Make"><br>
+                        <input type="text" name="model" id="model" placeholder="Enter Vehicle Model"><br>
+                        <input type="text" name="price" id="price" placeholder="Enter Vehicle Price $"><br>
+                        <button type="submit" class="btn btn-success">ADD new Vehicle</button>
+                    </div>
+                </form>
+
+              </div>
+            </div>
+          </div>
+
+    </header>
+
+    <div class="table-responsive">
+
+        <table class="table table-dark" id="carTable">
+            <thead>
+                <tr>
+                    <td scope="col">Year</td>
+                    <td scope="col">Make</td>
+                    <td scope="col">Model</td>
+                </tr>
+            </thead>
+            <tbody>
+
+            </tbody>
+        </table>
+    </div>
+
+</body>
+
+</html>

@@ -1,0 +1,4 @@
+Jun 27, 2020 12:43:47 PM com.revature.usedcardealership.dao.CarRepoDB addVehicle
+INFO: added vehicle
+Jun 27, 2020 12:44:13 PM com.revature.usedcardealership.dao.CarRepoDB getAllCars
+INFO: viewed inventory
