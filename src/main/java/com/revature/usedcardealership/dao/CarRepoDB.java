@@ -103,18 +103,18 @@ public class CarRepoDB implements ICarRepo{
 		return carList;
 	}
 	
-	public void buyVehicle() {
+	public void buyVehicle(int salesId, int vehicleId, String cFirstName, String cLastName, int paidPrice) {
 
 		
 		 setup();
 		    LOGGER.info("bought vehicle");
 		
-		ValidationService inputValidation = new ValidationService();
-		int salesId = inputValidation.getValidInt("--Please enter sales #id to process sale--");
-		int vehicleId = inputValidation.getValidInt("--Please enter vehicle #id to finish processing--");
-		String cFirstName = inputValidation.getValidString("--Enter customer first name--");
-		String cLastName = inputValidation.getValidString("--Enter customer last name--");
-		int paidPrice = inputValidation.getValidInt("--Enter amount paid--");
+//		ValidationService inputValidation = new ValidationService();
+//		int salesId = inputValidation.getValidInt("--Please enter sales #id to process sale--");
+//		int vehicleId = inputValidation.getValidInt("--Please enter vehicle #id to finish processing--");
+//		String cFirstName = inputValidation.getValidString("--Enter customer first name--");
+//		String cLastName = inputValidation.getValidString("--Enter customer last name--");
+//		int paidPrice = inputValidation.getValidInt("--Enter amount paid--");
 
 		try {
 			

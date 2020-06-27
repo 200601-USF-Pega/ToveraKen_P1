@@ -69,8 +69,9 @@ CarRepoDB carRepoDB = new CarRepoDB();
     @POST
     @Path("/buyVehicle")
     @Consumes(MediaType.MULTIPART_FORM_DATA)
-    public Response buyVehicle(@FormDataParam("salesid") int salesid, @FormDataParam("vin") int vin, @FormDataParam("firstname") String firstname, @FormDataParam("lastname") String lastname, @FormDataParam("price") int price) throws URISyntaxException {
-        System.out.println(salesid+vin+firstname+lastname+price);
+    public Response buyVehicle(@FormDataParam("salesid") int salesid, @FormDataParam("vin") int vin, @FormDataParam("firstname") String firstname, @FormDataParam("lastname") String lastname, @FormDataParam("purchaseprice") int purchaseprice) throws URISyntaxException {
+       //System.out.println(salesid+vin+firstname+lastname+purchaseprice);
+        carRepoDB.buyVehicle(salesid, vin, firstname, lastname, purchaseprice);
 
 
         return Response.status(401).build();

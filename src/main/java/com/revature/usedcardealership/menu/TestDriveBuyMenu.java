@@ -43,7 +43,7 @@ public class TestDriveBuyMenu implements IMenu{
 				break;
 			case 1:
 				System.out.println("\n You are about to purchase a " + buyCar);
-				carRepoDB.buyVehicle();
+			//	carRepoDB.buyVehicle();
 				System.out.println("\n -- Thank you for shopping at our dealership-- \n\n\n");
 				currentMenu = menuFactory.changeMenu("Login Menu");
 				currentMenu.menuStart();

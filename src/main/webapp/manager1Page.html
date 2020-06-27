@@ -66,12 +66,6 @@
 
                         let transactionCell = row.insertCell(0);
                         transactionCell.innerHTML = transaction[i];
-
-                        // let makeCell = row.insertCell(1);
-                        // makeCell.innerHTML = transaction[i].make;
-
-                        // let modelCell = row.insertCell(2);
-                        // modelCell.innerHTML = transaction[i].model;
                     }
                 }
             };
@@ -222,6 +216,17 @@
             })
         });
 
+        $(function () {
+            $("#purchaseButton").click(function () {
+                //  alert('Vehicle DELETED!');
+                document.getElementById('salesid').value = "";
+                document.getElementById('vin').value = "";
+                document.getElementById('firstname').value = "";
+                document.getElementById('lastname').value = "";
+                document.getElementById('purchaseprice').value = "";
+            })
+        });
+
         window.addEventListener("load", function () {
             function sendData() {
                 const XHR = new XMLHttpRequest();
@@ -267,7 +272,7 @@
             purchase.vin = document.getElementById("vin").value;
             purchase.firstname = document.getElementById("firstname").value;
             purchase.lastname = document.getElementById("lastname").value;
-            purchase.price = document.getElementById("price").value;
+            purchase.price = document.getElementById("purchaseprice").value;
             data.append('salesId', purchase.salesid);
             data.append('vin#', purchase.vin);
             data.append('firstName', purchase.firstname);
@@ -330,7 +335,7 @@
 
                 <input class="btn btn-warning" type="button" onClick="getAllCars()" value="View Inventory" />
                 <!-- Button trigger modal -->
-                <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModalCenter">
+                <button type="button" class="btn btn-warning" data-toggle="modal" data-target="#exampleModalCenter">
                     Purchase Vehicle
                 </button>
                 <!-- <input type="submit" class="btn btn-primary" value="View inventory"> -->
@@ -438,15 +443,15 @@
                                 <input type="text" name="vin" id="vin" placeholder="Enter VIN #:"><br>
                                 <input type="text" name="firstname" id="firstname" placeholder="Enter Customer First Name"><br>
                                 <input type="text" name="lastname" id="lastname" placeholder="Enter Customer Last Name"><br>
-                                <input type="text" name="price" id="price" placeholder="Enter Purchase Price $"><br>
-                                <button type="submit" class="btn btn-success">BUY Vehicle</button>
+                                <input type="text" name="purchaseprice" id="purchaseprice" placeholder="Enter Purchase Price $"><br>
+                                <button type="submit" class="btn btn-warning">BUY Vehicle</button>
                             </div>
                         </form>
 
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                        <button type="button" class="btn btn-primary">Save changes</button>
+                        <input type="button" class="btn btn-success" value="Reset" id="purchaseButton" />
                     </div>
                 </div>
             </div>
