@@ -3,7 +3,7 @@
 
 <head>
     <title>#1 USED DEALER</title>
-    <link href="https://fonts.googleapis.com/css2?family=Notable&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Pangolin&display=swap" rel="stylesheet">
     <link rel="stylesheet" type="text/css" href="managerStyle.css" />
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"
         integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj"
@@ -393,11 +393,11 @@
 
                     <form id="addform">
                         <div class="form-group">
-                            <input type="text" name="id" id="id" placeholder="Enter VIN#"><br>
-                            <input type="text" name="year" id="year" placeholder="Enter Vehicle Year"><br>
-                            <input type="text" name="make" id="make" placeholder="Enter Vehicle Make"><br>
-                            <input type="text" name="model" id="model" placeholder="Enter Vehicle Model"><br>
-                            <input type="text" name="price" id="price" placeholder="Enter Vehicle Price $"><br>
+                            <input type="number" name="id" id="id" placeholder="Enter VIN#" required><br>
+                            <input type="number" name="year" id="year" placeholder="Enter Vehicle Year" required><br>
+                            <input type="text" name="make" id="make" placeholder="Enter Vehicle Make" required><br>
+                            <input type="text" name="model" id="model" placeholder="Enter Vehicle Model" required><br>
+                            <input type="number" name="price" id="price" placeholder="Enter Vehicle Price $" required><br>
                             <input type="button" class="btn btn-success" value="Reset" id="addButton" />
                             <button type="submit" class="btn btn-success">ADD new Vehicle</button>
                         </div>
@@ -414,7 +414,7 @@
 
                     <form id="deleteform">
                         <div class="form-group">
-                            <input type="text" name="delete" id="delete" placeholder="Enter VIN#"><br>
+                            <input type="number" name="delete" id="delete" placeholder="Enter VIN#" required><br>
                             <input type="button" class="btn btn-success" value="Reset" id="deleteButton" />
                             <button type="submit" class="btn btn-success">DELETE</button>
                         </div>
@@ -439,11 +439,11 @@
 
                         <form id="purchaseform">
                             <div class="form-group">
-                                <input type="text" name="salesid" id="salesid" placeholder="Enter Associate #"><br>
-                                <input type="text" name="vin" id="vin" placeholder="Enter VIN #:"><br>
-                                <input type="text" name="firstname" id="firstname" placeholder="Enter Customer First Name"><br>
-                                <input type="text" name="lastname" id="lastname" placeholder="Enter Customer Last Name"><br>
-                                <input type="text" name="purchaseprice" id="purchaseprice" placeholder="Enter Purchase Price $"><br>
+                                <input type="number" name="salesid" id="salesid" placeholder="Enter Associate #" required><br>
+                                <input type="number" name="vin" id="vin" placeholder="Enter VIN #:" required><br>
+                                <input type="text" name="firstname" id="firstname" placeholder="Enter Customer First Name" required><br>
+                                <input type="text" name="lastname" id="lastname" placeholder="Enter Customer Last Name" required><br>
+                                <input type="number" name="purchaseprice" id="purchaseprice" placeholder="Enter Purchase Price $" required><br>
                                 <button type="submit" class="btn btn-warning">BUY Vehicle</button>
                             </div>
                         </form>

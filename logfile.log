@@ -1,4 +1,4 @@
-Jun 27, 2020 4:32:32 PM com.revature.usedcardealership.dao.CarRepoDB getAllCars
+Jun 27, 2020 11:59:33 PM com.revature.usedcardealership.dao.CarRepoDB getAllCars
 INFO: viewed inventory
-Jun 27, 2020 4:32:49 PM com.revature.usedcardealership.dao.CarRepoDB buyVehicle
-INFO: bought vehicle
+Jun 28, 2020 12:01:43 AM com.revature.usedcardealership.dao.CarRepoDB getAllCars
+INFO: viewed inventory
