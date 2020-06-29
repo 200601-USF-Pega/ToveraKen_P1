@@ -1,61 +1,117 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <title>Dealer App Login Form</title>
     <link href="https://fonts.googleapis.com/css2?family=Pangolin&display=swap" rel="stylesheet">
-    <link rel="stylesheet" type="text/css" href="LoginStyle.css"/>
-    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
-    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js" integrity="sha384-OgVRvuATP1z7JjHLkuOU7Xw704+h835Lr+6QL9UvYjZE3Ipu6Tp75j7Bh/kR0JKI" crossorigin="anonymous"></script>
+    <link rel="stylesheet" type="text/css" href="LoginStyle.css" />
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"
+        integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj"
+        crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"
+        integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo"
+        crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css"
+        integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"
+        integrity="sha384-OgVRvuATP1z7JjHLkuOU7Xw704+h835Lr+6QL9UvYjZE3Ipu6Tp75j7Bh/kR0JKI"
+        crossorigin="anonymous"></script>
 
     <script>
         function Redirect() {
-            if(document.getElementById("username").value == "manager" && document.getElementById("password").value == "password"){
-            window.location = "manager1Page.html";    
-            } else if(document.getElementById("username").value == "sales" && document.getElementById("password").value == "password") {
-            window.location = "sales1Page.html";
+            if (document.getElementById("username").value == "manager" && document.getElementById("password").value == "password") {
+                window.location = "manager1Page.html";
+            } else if (document.getElementById("username").value == "sales" && document.getElementById("password").value == "password") {
+                window.location = "sales1Page.html";
             }
-            else{
+            else {
                 alert("INVALID INPUT");
             }
-            
+
         }
+
+        function login() {
+            let login = {};
+            login.name = document.querySelector("#name").value;
+            //newB.tipAmount = document.querySelector("#tipAmount").value;
+            var req = new XMLHttpRequest();
+            req.onreadystatechange = function () {
+                if (this.readyState > 3) {
+                    document.querySelector("#name").value = "";
+                    //document.querySelector("#tipAmount").value = "";
+                }
+            }
+
+            req
+                .open(
+                    "PUT",
+                    "http://localhost:10080/P1.5/service/car/login",
+                    true);
+            req.setRequestHeader('Content-Type', 'application/json');
+            req.send(JSON.stringify(login));
+        }
+
     </script>
 </head>
+
 <body>
-<header>
+    <header>
 
-<div class="container jumbotron text-center" id="transparent">
-    <h3 id="title">Welcome to CarDealer App!</h3>
-    <button type="button" class="btn btn-success btn-lg" data-toggle="modal" data-target="#loginModal">LOGIN</button>
-</div>
+        <div class="container jumbotron text-center" id="transparent">
+            <h3 id="title">Welcome to CarDealer App!</h3>
+            <button type="button" class="btn btn-success btn-lg" data-toggle="modal"
+                data-target="#loginModal">LOGIN</button>
+        </div>
 
-<div class="modal fade" role="dialog" id="loginModal">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h3 class="modal-title">Sign-in Here</h3>
-                <button type="button" class="close" data-dismiss="modal">&times;</button>
-            </div>
+        <div class="modal fade" role="dialog" id="loginModal">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h3 class="modal-title">Sign-in Here</h3>
+                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    </div>
 
-            <div class="modal-body">
-                <div class="form-group">
-                    <input id="username" type="text" name="username" class="form-control" placeholder="Username" required>
+                    <div class="modal-body">
+                        <form id="login">
+                            <div class="form-group">
+
+                                <input id="username" type="text" name="username" class="form-control"
+                                    placeholder="Username" required>
+
+                            </div>
+                            <div class="form-group">
+
+                                <input id="password" type="password" name="password" class="form-control"
+                                    placeholder="Password" required>
+
+                            </div>
+
+                    </div>
+
+                    <div class="modal-footer">
+
+                        <input type="button" class="btn btn-success" onclick="Redirect();" value="Sign-in">
+
+                    </div>
+
+                    </form>
+
                 </div>
-                <div class="form-group">
-                    <input id="password" type="password" name="password" class="form-control" placeholder="Password" required>
-                </div>
-            </div>
-
-            <div class="modal-footer">
-                    <input type="button" class="btn btn-success" onclick="Redirect();" value="Sign-in">
             </div>
         </div>
-    </div>
-</div>
 
-</header>
+    </header>
+
+    <div>
+        <input type="text" id="name" name="name" />
+    </div>
+
+
+    <button type="submit" onClick="login()">
+     logging in
+    </button>
+
 </body>
+
 </html>

@@ -7,7 +7,9 @@ import com.sun.jersey.multipart.FormDataParam;
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
+import javax.ws.rs.core.UriBuilder;
 import java.io.IOException;
+import java.net.URI;
 import java.net.URISyntaxException;
 import java.util.ArrayList;
 
@@ -66,6 +68,23 @@ CarRepoDB carRepoDB = new CarRepoDB();
 
     }
 
+    @DELETE
+    @Path("/delete2")
+    @Consumes(MediaType.APPLICATION_JSON)
+    public Response removeVehicle(int vin) {
+
+        System.out.println(vin);
+        try {
+            carRepoDB.deleteCar(vin);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+
+        return Response.ok().status(201).build();
+
+    }
+
     @POST
     @Path("/buyVehicle")
     @Consumes(MediaType.MULTIPART_FORM_DATA)
@@ -77,5 +96,15 @@ CarRepoDB carRepoDB = new CarRepoDB();
         return Response.status(401).build();
 
     }
+
+    @PUT
+    @Path("/login")
+    @Consumes(MediaType.APPLICATION_JSON)
+    public Response login(String name) {
+        System.out.println(name);
+        return Response.status(201).build();
+    }
+
+
 
 }

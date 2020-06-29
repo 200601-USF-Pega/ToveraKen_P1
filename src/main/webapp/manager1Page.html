@@ -141,67 +141,67 @@
 
         }
 
-        window.addEventListener("load", function () {
-            function sendData() {
-                const XHR = new XMLHttpRequest();
+        // window.addEventListener("load", function () {
+        //     function sendData() {
+        //         const XHR = new XMLHttpRequest();
 
-                // Bind the FormData object and the form element
-                const FD = new FormData(form);
+        //         // Bind the FormData object and the form element
+        //         const FD = new FormData(form);
 
-                // Define what happens on successful data submission
-                XHR.addEventListener("load", function (event) {
-                    window.location.href("http://www.w3schools.com");
-                    //alert( event.target.responseText );
-                });
+        //         // Define what happens on successful data submission
+        //         XHR.addEventListener("load", function (event) {
+        //             window.location.href("http://www.w3schools.com");
+        //             //alert( event.target.responseText );
+        //         });
 
-                // Define what happens in case of error
-                XHR.addEventListener("error", function (event) {
-                    alert('Oops! Something went wrong.');
-                });
+        //         // Define what happens in case of error
+        //         XHR.addEventListener("error", function (event) {
+        //             alert('Oops! Something went wrong.');
+        //         });
 
-                // Set up our request
-                XHR.open("POST", "http://localhost:10080/P1.5/service/car/delete");
+        //         // Set up our request
+        //         XHR.open("POST", "http://localhost:10080/P1.5/service/car/delete");
 
-                // The data sent is what the user provided in the form
-                //XHR.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
-                XHR.send(FD);
-            }
+        //         // The data sent is what the user provided in the form
+        //         //XHR.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+        //         XHR.send(FD);
+        //     }
 
-            // Access the form element...
-            const form = document.getElementById("deleteform");
+        //     // Access the form element...
+        //     const form = document.getElementById("deleteform");
 
-            // ...and take over its submit event.
-            form.addEventListener("submit", function (event) {
-                event.preventDefault();
+        //     // ...and take over its submit event.
+        //     form.addEventListener("submit", function (event) {
+        //         event.preventDefault();
 
-                sendData();
-            });
-        });
+        //         sendData();
+        //     });
+        // });
 
-        function deleteVehicle() {
+        // function deleteVehicle() {
 
-            var data = new FormData();
-            let car = [];
-            car.vin = document.getElementById("delete").value;
-            data.append('vin#', car.vin);
+        //     var data = new FormData();
+        //     let car = [];
+        //     car.vin = document.getElementById("delete").value;
+        //     data.append('vin#', car.vin);
 
-            var xhr = new XMLHttpRequest();
-            xhr.open('POST', 'http://localhost:10080/P1.5/service/car/delete', true);
-            xhr.onload = function () {
-                var status = xhttp.status
+        //     var xhr = new XMLHttpRequest();
+        //     xhr.open('POST', 'http://localhost:10080/P1.5/service/car/delete', true);
+        //     xhr.onload = function () {
+        //         var status = xhttp.status
 
-                if (status > 199 && status < 300 && this.readyState > 3) {
+        //         if (status > 199 && status < 300 && this.readyState > 3) {
 
-                    window.location.href("http://www.w3schools.com");
+        //             window.location.href("http://www.w3schools.com");
 
-                }
-            };
-        }
+        //         }
+        //     };
+        // }
 
         $(function () {
-            $("#deleteButton").click(function () {
+            $("#inputButton").click(function () {
                 //  alert('Vehicle DELETED!');
-                document.getElementById('delete').value = "";
+                document.getElementById('deleteVin').value = "";
             })
         });
 
@@ -278,7 +278,7 @@
             data.append('firstName', purchase.firstname);
             data.append('lastName', purchase.lastname);
             data.append('price', purchase.price);
-            
+
 
             var xhr = new XMLHttpRequest();
             xhr.open('POST', 'http://localhost:10080/P1.5/service/car/buyVehicle', true);
@@ -292,6 +292,25 @@
                 }
             };
             xhr.send(data);
+        }
+
+        function removeVehicle() {
+
+            let car = {};
+            car = document.querySelector("#deleteVin").value;
+
+            var req = new XMLHttpRequest();
+            req.onreadystatechange = function () {
+
+                if (this.readyState > 3) {
+
+                    document.querySelector("#deleteVin").value = "";
+                }
+            };
+
+            req.open("DELETE", "http://localhost:10080/P1.5/service/car/delete2", true);
+            req.setRequestHeader('Content-Type', 'application/json');
+            req.send(JSON.stringify(car));
         }
     </script>
 
@@ -315,9 +334,12 @@
                         ADD Vehicle
                     </button>
                 </li>
+
                 <button type="button" class="btn btn-warning" data-toggle="modal" data-target=".bd-example-modal-sm">
                     DELETE Vehicle
                 </button>
+
+
                 <li>
                     <form action="logIn.html">
                         <input class="btn btn-warning" type="submit" value="Back to log-in" />
@@ -397,7 +419,8 @@
                             <input type="number" name="year" id="year" placeholder="Enter Vehicle Year" required><br>
                             <input type="text" name="make" id="make" placeholder="Enter Vehicle Make" required><br>
                             <input type="text" name="model" id="model" placeholder="Enter Vehicle Model" required><br>
-                            <input type="number" name="price" id="price" placeholder="Enter Vehicle Price $" required><br>
+                            <input type="number" name="price" id="price" placeholder="Enter Vehicle Price $"
+                                required><br>
                             <input type="button" class="btn btn-success" value="Reset" id="addButton" />
                             <button type="submit" class="btn btn-success">ADD new Vehicle</button>
                         </div>
@@ -412,13 +435,16 @@
             <div class="modal-dialog modal-sm">
                 <div class="modal-content">
 
-                    <form id="deleteform">
+                    <!-- <form id="deleteform">
                         <div class="form-group">
                             <input type="number" name="delete" id="delete" placeholder="Enter VIN#" required><br>
                             <input type="button" class="btn btn-success" value="Reset" id="deleteButton" />
                             <button type="submit" class="btn btn-success">DELETE</button>
                         </div>
-                    </form>
+                    </form> -->
+
+                    <input type="number" id="deleteVin" placeholder="Enter the VIN#"/>
+                    <input type="button" id="inputButton" value="DELETE Vehicle" onclick="removeVehicle()"/>
 
                 </div>
             </div>
@@ -439,11 +465,15 @@
 
                         <form id="purchaseform">
                             <div class="form-group">
-                                <input type="number" name="salesid" id="salesid" placeholder="Enter Associate #" required><br>
+                                <input type="number" name="salesid" id="salesid" placeholder="Enter Associate #"
+                                    required><br>
                                 <input type="number" name="vin" id="vin" placeholder="Enter VIN #:" required><br>
-                                <input type="text" name="firstname" id="firstname" placeholder="Enter Customer First Name" required><br>
-                                <input type="text" name="lastname" id="lastname" placeholder="Enter Customer Last Name" required><br>
-                                <input type="number" name="purchaseprice" id="purchaseprice" placeholder="Enter Purchase Price $" required><br>
+                                <input type="text" name="firstname" id="firstname"
+                                    placeholder="Enter Customer First Name" required><br>
+                                <input type="text" name="lastname" id="lastname" placeholder="Enter Customer Last Name"
+                                    required><br>
+                                <input type="number" name="purchaseprice" id="purchaseprice"
+                                    placeholder="Enter Purchase Price $" required><br>
                                 <button type="submit" class="btn btn-warning">BUY Vehicle</button>
                             </div>
                         </form>
